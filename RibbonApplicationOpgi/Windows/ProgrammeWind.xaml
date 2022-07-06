@@ -1,0 +1,73 @@
+﻿<dx:ThemedWindow
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+    xmlns:dxlc="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol" xmlns:Model="clr-namespace:RibbonApplicationOpgi.Model"
+    xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+    xmlns:SqlServer="clr-namespace:System.Data.Entity.SqlServer;assembly=EntityFramework.SqlServer"
+    xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+    x:Class="RibbonApplicationOpgi.Windows.ProgrammeWind"
+    Title="ProgrammeS" Height="600" Width="800" WindowStartupLocation="CenterScreen"
+    >
+    <Grid>
+        <dxlc:LayoutControl>
+            <dxlc:LayoutGroup Orientation="Vertical">
+                <dxlc:LayoutGroup Orientation="Vertical">
+                    <dxlc:LayoutGroup Header="Programme" View="GroupBox" HorizontalAlignment="Stretch" VerticalAlignment="Top">
+                        <dxlc:LayoutGroup Orientation="Vertical">
+                            <dxlc:LayoutItem Label="Id">
+                                <dxe:TextEdit x:Name="IdItem" IsReadOnly="True"/>
+                            </dxlc:LayoutItem>
+                            <dxlc:LayoutItem Label="Désignation">
+                                <dxe:TextEdit x:Name="DesignationItem"/>
+                            </dxlc:LayoutItem>
+                        </dxlc:LayoutGroup>
+                    </dxlc:LayoutGroup>
+                    <dxlc:LayoutGroup Header="LayoutGroup" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                        <dxg:GridControl x:Name="GridControl" 
+                                         AutoGenerateColumns="AddNew" 
+                                         EnableSmartColumnsGeneration="True"
+                                         >
+                            <dxg:GridControl.View>
+                                <dxg:TableView x:Name="TableView" FocusedRowChanged="TableView_FocusedRowChanged" ShowFilterPanelMode="ShowAlways"/>
+                            </dxg:GridControl.View>
+                        </dxg:GridControl>
+                    </dxlc:LayoutGroup>
+                </dxlc:LayoutGroup>
+
+                <StackPanel Orientation="Horizontal" 
+                            VerticalAlignment="Bottom"
+                            HorizontalAlignment="Right"
+                            Height="36">
+                    <dx:SimpleButton Name="Validatebtn" 
+                                     Content="Valider"
+                                     Width="120"
+                                     Visibility="Hidden" Click="Validatebtn_Click"/>
+                    <StackPanel Width="10"/>
+                    <dx:SimpleButton Name="Cancelbtn" 
+                                     Content="Annuler"
+                                     Width="120"
+                                     Visibility="Hidden" Click="Cancelbtn_Click"/>
+                    <StackPanel Width="10"/>
+                    <dx:SimpleButton Name="Addbtn" 
+                                     Content="Ajouter"
+                                     Width="120" Click="Addbtn_Click"/>
+                    <StackPanel Width="10"/>
+                    <dx:SimpleButton Name="Updatebtn" 
+                                     Content="Editer"
+                                     Width="120" Click="Updatebtn_Click"/>
+                    <StackPanel Width="10"/>
+                    <dx:SimpleButton Name="Deletebtn" 
+                                     Content="Supprimer"
+                                     Width="120" Click="Deletebtn_Click"/>
+                    <StackPanel Width="10"/>
+                    <StackPanel Width="10"/>
+                    <dx:SimpleButton Name="Exportbtn" 
+                                     Content="Exporter Excel"
+                                     Width="120" Click="Exportbtn_Click"/>
+                    <StackPanel Width="10"/>
+                </StackPanel>
+            </dxlc:LayoutGroup>
+        </dxlc:LayoutControl>
+    </Grid>
+</dx:ThemedWindow>

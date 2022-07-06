@@ -1,0 +1,328 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="FiltreModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Benificiere">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Num" Type="nvarchar" MaxLength="50" />
+          <Property Name="Id_postulant" Type="int" />
+          <Property Name="Date_Maj" Type="date" />
+          <Property Name="Id_Projet" Type="int" />
+          <Property Name="Adress" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Postulant">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Ref" Type="nvarchar" MaxLength="50" />
+          <Property Name="Valide" Type="nvarchar" MaxLength="256" />
+          <Property Name="Date_Demande" Type="date" />
+          <Property Name="Id_programme" Type="int" />
+          <Property Name="nom" Type="nvarchar" MaxLength="256" />
+          <Property Name="Nom_jeune" Type="nvarchar" MaxLength="256" />
+          <Property Name="Prenom" Type="nvarchar" MaxLength="256" />
+          <Property Name="Sexe" Type="nvarchar" MaxLength="50" />
+          <Property Name="Date_naissance" Type="date" />
+          <Property Name="Type_date_naissance" Type="nvarchar" MaxLength="50" />
+          <Property Name="Lieu_naissance" Type="nvarchar" MaxLength="256" />
+          <Property Name="Sit_Familliale" Type="nvarchar" MaxLength="50" />
+          <Property Name="Prenom_pere" Type="nvarchar" MaxLength="256" />
+          <Property Name="Nom_mere" Type="nvarchar" MaxLength="256" />
+          <Property Name="prenom_mere" Type="nvarchar" MaxLength="256" />
+          <Property Name="Nom_conjoint" Type="nvarchar" MaxLength="256" />
+          <Property Name="Prenom_Conjoint" Type="nvarchar" MaxLength="256" />
+          <Property Name="Date_naissance_conjoint" Type="date" />
+          <Property Name="Type_Date_naissance_Conjoint" Type="nvarchar" MaxLength="50" />
+          <Property Name="Lieu_Naissance_conjoint" Type="nvarchar" MaxLength="256" />
+          <Property Name="Prenom_pere_conjoint" Type="nvarchar" MaxLength="256" />
+          <Property Name="Nom_mere_conjoint" Type="nvarchar" MaxLength="256" />
+          <Property Name="Prenom_mere_conjoint" Type="nvarchar" MaxLength="256" />
+        </EntityType>
+        <EntityType Name="Programme">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DesignationProgramme" Type="nvarchar" MaxLength="256" />
+        </EntityType>
+        <EntityType Name="Projet">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Intitule_Projet" Type="nvarchar" MaxLength="256" />
+          <Property Name="Commune" Type="nvarchar" MaxLength="256" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Filtre.dbo.ref_maj' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Filtre.dbo.sysdiagrams' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <Association Name="FK_Benificiere_Postulant">
+          <End Role="Postulant" Type="Self.Postulant" Multiplicity="0..1" />
+          <End Role="Benificiere" Type="Self.Benificiere" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Postulant">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Benificiere">
+              <PropertyRef Name="Id_postulant" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Benificiere_Projet">
+          <End Role="Projet" Type="Self.Projet" Multiplicity="0..1" />
+          <End Role="Benificiere" Type="Self.Benificiere" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Projet">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Benificiere">
+              <PropertyRef Name="Id_Projet" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Postulant_Programme">
+          <End Role="Programme" Type="Self.Programme" Multiplicity="0..1" />
+          <End Role="Postulant" Type="Self.Postulant" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Programme">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Postulant">
+              <PropertyRef Name="Id_programme" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="FiltreModelStoreContainer">
+          <EntitySet Name="Benificiere" EntityType="Self.Benificiere" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Postulant" EntityType="Self.Postulant" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Programme" EntityType="Self.Programme" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Projet" EntityType="Self.Projet" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Benificiere_Postulant" Association="Self.FK_Benificiere_Postulant">
+            <End Role="Postulant" EntitySet="Postulant" />
+            <End Role="Benificiere" EntitySet="Benificiere" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Benificiere_Projet" Association="Self.FK_Benificiere_Projet">
+            <End Role="Projet" EntitySet="Projet" />
+            <End Role="Benificiere" EntitySet="Benificiere" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Postulant_Programme" Association="Self.FK_Postulant_Programme">
+            <End Role="Programme" EntitySet="Programme" />
+            <End Role="Postulant" EntitySet="Postulant" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="FiltreModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Benificiere">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Num" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Id_postulant" Type="Int32" />
+          <Property Name="Date_Maj" Type="DateTime" Precision="0" />
+          <Property Name="Id_Projet" Type="Int32" />
+          <Property Name="Adress" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Postulant" Relationship="Self.FK_Benificiere_Postulant" FromRole="Benificiere" ToRole="Postulant" />
+          <NavigationProperty Name="Projet" Relationship="Self.FK_Benificiere_Projet" FromRole="Benificiere" ToRole="Projet" />
+        </EntityType>
+        <EntityType Name="Postulant">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Ref" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Valide" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Date_Demande" Type="DateTime" Precision="0" />
+          <Property Name="Id_programme" Type="Int32" />
+          <Property Name="nom" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Nom_jeune" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Prenom" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Sexe" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Date_naissance" Type="DateTime" Precision="0" />
+          <Property Name="Type_date_naissance" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Lieu_naissance" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Sit_Familliale" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Prenom_pere" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Nom_mere" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="prenom_mere" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Nom_conjoint" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Prenom_Conjoint" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Date_naissance_conjoint" Type="DateTime" Precision="0" />
+          <Property Name="Type_Date_naissance_Conjoint" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Lieu_Naissance_conjoint" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Prenom_pere_conjoint" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Nom_mere_conjoint" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Prenom_mere_conjoint" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Benificieres" Relationship="Self.FK_Benificiere_Postulant" FromRole="Postulant" ToRole="Benificiere" />
+          <NavigationProperty Name="Programme" Relationship="Self.FK_Postulant_Programme" FromRole="Postulant" ToRole="Programme" />
+        </EntityType>
+        <EntityType Name="Programme">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DesignationProgramme" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Postulants" Relationship="Self.FK_Postulant_Programme" FromRole="Programme" ToRole="Postulant" />
+        </EntityType>
+        <EntityType Name="Projet">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Intitule_Projet" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Commune" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Benificieres" Relationship="Self.FK_Benificiere_Projet" FromRole="Projet" ToRole="Benificiere" />
+        </EntityType>
+        <Association Name="FK_Benificiere_Postulant">
+          <End Role="Postulant" Type="Self.Postulant" Multiplicity="0..1" />
+          <End Role="Benificiere" Type="Self.Benificiere" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Postulant">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Benificiere">
+              <PropertyRef Name="Id_postulant" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Benificiere_Projet">
+          <End Role="Projet" Type="Self.Projet" Multiplicity="0..1" />
+          <End Role="Benificiere" Type="Self.Benificiere" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Projet">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Benificiere">
+              <PropertyRef Name="Id_Projet" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Postulant_Programme">
+          <End Role="Programme" Type="Self.Programme" Multiplicity="0..1" />
+          <End Role="Postulant" Type="Self.Postulant" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Programme">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Postulant">
+              <PropertyRef Name="Id_programme" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="FiltreEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Benificieres" EntityType="Self.Benificiere" />
+          <EntitySet Name="Postulants" EntityType="Self.Postulant" />
+          <EntitySet Name="Programmes" EntityType="Self.Programme" />
+          <EntitySet Name="Projets" EntityType="Self.Projet" />
+          <AssociationSet Name="FK_Benificiere_Postulant" Association="Self.FK_Benificiere_Postulant">
+            <End Role="Postulant" EntitySet="Postulants" />
+            <End Role="Benificiere" EntitySet="Benificieres" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Benificiere_Projet" Association="Self.FK_Benificiere_Projet">
+            <End Role="Projet" EntitySet="Projets" />
+            <End Role="Benificiere" EntitySet="Benificieres" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Postulant_Programme" Association="Self.FK_Postulant_Programme">
+            <End Role="Programme" EntitySet="Programmes" />
+            <End Role="Postulant" EntitySet="Postulants" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="FiltreModelStoreContainer" CdmEntityContainer="FiltreEntities">
+          <EntitySetMapping Name="Benificieres">
+            <EntityTypeMapping TypeName="FiltreModel.Benificiere">
+              <MappingFragment StoreEntitySet="Benificiere">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Num" ColumnName="Num" />
+                <ScalarProperty Name="Id_postulant" ColumnName="Id_postulant" />
+                <ScalarProperty Name="Date_Maj" ColumnName="Date_Maj" />
+                <ScalarProperty Name="Id_Projet" ColumnName="Id_Projet" />
+                <ScalarProperty Name="Adress" ColumnName="Adress" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Postulants">
+            <EntityTypeMapping TypeName="FiltreModel.Postulant">
+              <MappingFragment StoreEntitySet="Postulant">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Ref" ColumnName="Ref" />
+                <ScalarProperty Name="Valide" ColumnName="Valide" />
+                <ScalarProperty Name="Date_Demande" ColumnName="Date_Demande" />
+                <ScalarProperty Name="Id_programme" ColumnName="Id_programme" />
+                <ScalarProperty Name="nom" ColumnName="nom" />
+                <ScalarProperty Name="Nom_jeune" ColumnName="Nom_jeune" />
+                <ScalarProperty Name="Prenom" ColumnName="Prenom" />
+                <ScalarProperty Name="Sexe" ColumnName="Sexe" />
+                <ScalarProperty Name="Date_naissance" ColumnName="Date_naissance" />
+                <ScalarProperty Name="Type_date_naissance" ColumnName="Type_date_naissance" />
+                <ScalarProperty Name="Lieu_naissance" ColumnName="Lieu_naissance" />
+                <ScalarProperty Name="Sit_Familliale" ColumnName="Sit_Familliale" />
+                <ScalarProperty Name="Prenom_pere" ColumnName="Prenom_pere" />
+                <ScalarProperty Name="Nom_mere" ColumnName="Nom_mere" />
+                <ScalarProperty Name="prenom_mere" ColumnName="prenom_mere" />
+                <ScalarProperty Name="Nom_conjoint" ColumnName="Nom_conjoint" />
+                <ScalarProperty Name="Prenom_Conjoint" ColumnName="Prenom_Conjoint" />
+                <ScalarProperty Name="Date_naissance_conjoint" ColumnName="Date_naissance_conjoint" />
+                <ScalarProperty Name="Type_Date_naissance_Conjoint" ColumnName="Type_Date_naissance_Conjoint" />
+                <ScalarProperty Name="Lieu_Naissance_conjoint" ColumnName="Lieu_Naissance_conjoint" />
+                <ScalarProperty Name="Prenom_pere_conjoint" ColumnName="Prenom_pere_conjoint" />
+                <ScalarProperty Name="Nom_mere_conjoint" ColumnName="Nom_mere_conjoint" />
+                <ScalarProperty Name="Prenom_mere_conjoint" ColumnName="Prenom_mere_conjoint" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Programmes">
+            <EntityTypeMapping TypeName="FiltreModel.Programme">
+              <MappingFragment StoreEntitySet="Programme">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="DesignationProgramme" ColumnName="DesignationProgramme" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Projets">
+            <EntityTypeMapping TypeName="FiltreModel.Projet">
+              <MappingFragment StoreEntitySet="Projet">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Intitule_Projet" ColumnName="Intitule_Projet" />
+                <ScalarProperty Name="Commune" ColumnName="Commune" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
